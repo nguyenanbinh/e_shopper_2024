@@ -1,4 +1,25 @@
 <div class="col-sm-3">
+@if(Route::is('profile', 'my-product'))
+<div class="left-sidebar">
+    <h2>Account</h2>
+    <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><a href="{{ route('profile') }}">account</a></h4>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><a href="#">My product</a></h4>
+            </div>
+        </div>
+
+    </div><!--/category-products-->
+</div>
+@else
+
     <div class="left-sidebar">
         <h2>Category</h2>
         <div class="panel-group category-products" id="accordian"><!--category-productsr-->
@@ -136,4 +157,5 @@
         </div><!--/shipping-->
 
     </div>
+@endif
 </div>
