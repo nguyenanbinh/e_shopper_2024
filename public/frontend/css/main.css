@@ -188,13 +188,13 @@ a#scrollUp i {
 }
 
 .shop-menu ul li {
-    display: inline-block;
+    /* display: inline-block; */
     padding-left: 15px;
     padding-right: 15px;
 }
 
 .shop-menu ul li:last-child {
-    padding-right: 0;
+    /* padding-right: 0; */
 }
 
 .shop-menu ul li a {
@@ -1417,12 +1417,13 @@ h2.title {
 
 #form {
     display: block;
-    margin-bottom: 185px;
-    margin-top: 185px;
+    margin-bottom: 10%;
+    margin-top: 5%;
     overflow: hidden;
 }
 
-.login-form {}
+.login-form {
+}
 
 .signup-form {}
 
@@ -2457,4 +2458,12 @@ textarea {
 }
 .through {
     text-decoration: line-through;
+}
+
+.invalid-feedback {
+    color:red;
+}
+
+.is-invalid {
+    border: 2px solid red !important;
 }

@@ -29,22 +29,27 @@
     @include('frontend.layouts.header')
     <!--/header-->
     <!--slider-->
+    @if(Route::is('home'))
     @include('frontend.layouts.slider')
+    @endif
     <!--/slider-->
 	<section>
 		<div class="container">
 			<div class="row">
                 <!--menu-left-->
+                @if(!Route::is('login', 'register'))
                 @include('frontend.layouts.menu-left')
+                @endif
                 <!--/menu-left-->
 				<div class="col-sm-9 padding-right">
+                    @include('admin.notifications.message')
                     @yield('content')
 				</div>
 			</div>
 		</div>
 	</section>
     <!--footer-->
-    @include('admin.layouts.footer')
+    @include('frontend.layouts.footer')
     <!--/footer-->
     <script src="{{asset('frontend/js/jquery.js')}}"></script>
 	<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>

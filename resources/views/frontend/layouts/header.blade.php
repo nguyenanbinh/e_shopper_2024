@@ -59,11 +59,29 @@
                 <div class="col-md-8 clearfix">
                     <div class="shop-menu clearfix pull-right">
                         <ul class="nav navbar-nav">
-                            <li><a href=""><i class="fa fa-user"></i> Account</a></li>
                             <li><a href=""><i class="fa fa-star"></i> Wishlist</a></li>
                             <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
                             <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
-                            <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
+                            @guest
+                                <li><a href="{{ route('login') }}"><i class="fa fa-lock"></i> Login</a></li>
+                                <li><a href="{{ route('register') }}"><i class="fa fa-lock"></i> Register</a></li>
+                            @endguest
+                            @auth
+                            {{-- <li>
+                                <a href="#"><i class="fa fa-user"></i> Account</a>
+                            </li> --}}
+                            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> Account</a>
+                                <ul class="dropdown-menu">
+                                  <li><a href="#">Profile</a></li>
+                                  <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">Logout</a></li>
+                                </ul>
+                            </li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+                                @csrf
+                            </form>
+                            @endauth
+
                         </ul>
                     </div>
                 </div>
