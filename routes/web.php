@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,9 @@ Route::post('/login',[AuthController::class, 'postLogin'])->name('login');
 Route::get('/register',[AuthController::class, 'getRegister'])->name('register');
 Route::post('/register',[AuthController::class, 'postRegister'])->name('register');
 Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
+// Profile
+Route::get('/profile',[FrontendUserController::class, 'profile'])->name('profile');
+Route::put('/profile',[FrontendUserController::class, 'updateProfile'])->name('profile');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();

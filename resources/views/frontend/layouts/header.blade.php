@@ -30,7 +30,7 @@
             <div class="row">
                 <div class="col-md-4 clearfix">
                     <div class="logo pull-left">
-                        <a href="index.html"><img src="{{ asset('frontend/images/home/logo.png') }}" alt="" /></a>
+                        <a href="{{ route('home') }}"><img src="{{ asset('frontend/images/home/logo.png') }}" alt="" /></a>
                     </div>
                     <div class="btn-group pull-right clearfix">
                         <div class="btn-group">
@@ -72,7 +72,7 @@
                             </li> --}}
                             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> Account</a>
                                 <ul class="dropdown-menu">
-                                  <li><a href="#">Profile</a></li>
+                                  <li><a href="{{ route('profile') }}">Profile</a></li>
                                   <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">Logout</a></li>
                                 </ul>
@@ -103,7 +103,7 @@
                     </div>
                     <div class="mainmenu pull-left">
                         <ul class="nav navbar-nav collapse navbar-collapse">
-                            <li><a href="index.html" class="active">Home</a></li>
+                            <li><a href="{{ route('home') }}" class="active">Home</a></li>
                             <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
                                 <ul role="menu" class="sub-menu">
                                     <li><a href="shop.html">Products</a></li>
