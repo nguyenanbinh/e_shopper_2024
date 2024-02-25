@@ -85,7 +85,7 @@
                     <div class="dropdown-menu dropdown-menu-right user-dd animated">
                         <a class="dropdown-item" href="{{ route('admin.user.profile') }}"><i class="ti-user m-r-5 m-l-5"></i> My
                             Profile</a>
-                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                        <a class="dropdown-item" href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                             <i class="ti-email m-r-5 m-l-5"></i> Logout
                         </a>
@@ -95,7 +95,7 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
             </ul>
-            <form id="logout-form" action="{{ route('logout') }}" method="post" class="d-none">
+            <form id="logout-form" action="{{ route('admin.logout') }}" method="post" class="d-none">
                 @csrf
             </form>
         </div>

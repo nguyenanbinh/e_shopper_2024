@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -21,11 +22,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('frontend.home');
-});
-
-Auth::routes();
+})->name('home');
+// Auth frontend
+Route::get('/login',[AuthController::class, 'getLogin'])->name('login');
+Route::post('/login',[AuthController::class, 'postLogin'])->name('login');
+Route::get('/register',[AuthController::class, 'getRegister'])->name('register');
+Route::post('/register',[AuthController::class, 'postRegister'])->name('register');
+Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
+    Auth::routes();
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // User Profile
