@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\AuthController;
+use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -33,6 +34,11 @@ Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 // Profile
 Route::get('/profile',[FrontendUserController::class, 'profile'])->name('profile');
 Route::put('/profile',[FrontendUserController::class, 'updateProfile'])->name('profile');
+// Blog
+Route::get('/blogs',[FrontendBlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{id}',[FrontendBlogController::class, 'show'])->name('blogs.show');
+Route::get('/profile',[FrontendBlogController::class, 'profile'])->name('profile');
+
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();

@@ -41,7 +41,7 @@
         <div class="col-lg-12 col-xlg-12 col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('admin.blogs.store') }}" method="POST"
+                    <form action="{{ route('admin.blogs.update', ['blog' => $blog->id]) }}" method="POST"
                         class="form-horizontal form-material"
                         enctype="multipart/form-data">
                         @csrf
