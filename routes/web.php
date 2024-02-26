@@ -38,7 +38,9 @@ Route::put('/profile',[FrontendUserController::class, 'updateProfile'])->name('p
 Route::get('/blogs',[FrontendBlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}',[FrontendBlogController::class, 'show'])->name('blogs.show');
 Route::post('/ajaxBlog',[FrontendBlogController::class, 'ajaxBlog'])->middleware('auth')->name('blogs.ajaxBlog');
-
+// Blog comment
+Route::post('/ajaxComment', [FrontendBlogController::class, 'ajaxComment'])->middleware('auth')->name('blogs.ajaxComment');
+Route::post('/ajaxCommentChild', [FrontendBlogController::class, 'ajaxCommentChild'])->middleware('auth')->name('blogs.ajaxCommentChild');
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();
