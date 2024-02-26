@@ -1,5 +1,8 @@
 @extends('frontend.layouts.app')
 @section('content')
+@push('css')
+<link type="text/css" rel="stylesheet" href="{{ asset('frontend/css/rate.css') }}">
+@endpush
 <div class="blog-post-area">
     <h2 class="title text-center">Latest From our Blog</h2>
     <div class="single-blog-post">
@@ -35,17 +38,20 @@
 <!--/blog-post-area-->
 
 <div class="rating-area">
-    <ul class="ratings">
-        <li class="rate-this">Rate this item:</li>
-        <li>
-            <i class="fa fa-star color"></i>
-            <i class="fa fa-star color"></i>
-            <i class="fa fa-star color"></i>
-            <i class="fa fa-star"></i>
-            <i class="fa fa-star"></i>
-        </li>
-        <li class="color">(6 votes)</li>
-    </ul>
+    <div class="ratings">
+        <div class="rate-this">Rate this item:</div>
+        <div class="rate">
+            <div class="vote">
+                <div class="star_1 ratings_stars @if($avgRate >= 1) ratings_over @endif"><input value="1" type="hidden"></div>
+                <div class="star_2 ratings_stars @if($avgRate >= 2) ratings_over @endif"><input value="2" type="hidden"></div>
+                <div class="star_3 ratings_stars @if($avgRate >= 3) ratings_over @endif"><input value="3" type="hidden"></div>
+                <div class="star_4 ratings_stars @if($avgRate >= 4) ratings_over @endif"><input value="4" type="hidden"></div>
+                <div class="star_5 ratings_stars @if($avgRate >= 5) ratings_over @endif"><input value="5" type="hidden"></div>
+                <span class="rate-np">{{ $avgRate }}</span>
+            </div>
+        </div>
+        <div class="color">(6 votes)</div>
+    </div>
     {{-- <ul class="tag">
         <li>TAG:</li>
         <li><a class="color" href="">Pink <span>/</span></a></li>
@@ -234,3 +240,59 @@
 </div>
 <!--/Repaly Box-->
 @endsection
+
+@push('scripts')
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    </script>
+<script>
+    $(document).ready(function(){
+        //vote
+        $('.ratings_stars').hover(
+            // Handles the mouseover
+            function() {
+                $(this).prevAll().andSelf().addClass('ratings_hover');
+                // $(this).nextAll().removeClass('ratings_vote');
+            },
+            function() {
+                $(this).prevAll().andSelf().removeClass('ratings_hover');
+                // set_votes($(this).parent());
+            }
+        );
+
+        $('.ratings_stars').click(function(){
+            var Values =  $(this).find("input").val();
+            $('.rate-np').text(Values);
+            if ($(this).hasClass('ratings_over')) {
+                $('.ratings_stars').removeClass('ratings_over');
+                $(this).prevAll().andSelf().addClass('ratings_over');
+            } else {
+                $(this).prevAll().andSelf().addClass('ratings_over');
+            }
+
+            $.ajax({
+                type:'POST',
+                url: '{{ route('blogs.ajaxBlog') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    rate: Values,
+                    blog_id: '{{ $blog->id }}',
+                    user_id: '{{ auth()->user()->id }}',
+                },
+                success:function(data){
+                    console.log(data);
+                },
+                error: function(errors) {
+                    if(errors.status == 401) {
+                        alert('Please login to rate this blog')
+                    }
+                }
+            });
+        });
+    });
+</script>
+@endpush
