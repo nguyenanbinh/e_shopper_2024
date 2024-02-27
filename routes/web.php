@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\BlogController;
+use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
@@ -63,6 +65,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::delete('/countries/{id}', [CountryController::class, 'destroy'])->name('countries.destroy');
 
     Route::resource('/blogs', BlogController::class)->except(['show']);
+    Route::resource('/categories', CategoryController::class)->except(['show', 'edit', 'update']);
+    Route::resource('/brands', BrandController::class)->except(['show', 'edit', 'update']);
 
     Route::any('/ckfinder/connector', '\CKSource\CKFinderBridge\Controller\CKFinderController@requestAction')
     ->name('ckfinder_connector');
