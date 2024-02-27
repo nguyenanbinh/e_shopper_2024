@@ -46,6 +46,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    // Left sidebar
+    Route::get('/form-basic', fn() => view('admin.sidebar.form-basic'))->name('sidebar.form-basic');
+    Route::get('/table-basic', fn() => view('admin.sidebar.table-basic'))->name('sidebar.table-basic');
+    Route::get('/icon-material', fn() => view('admin.sidebar.icon-material'))->name('sidebar.icon-material');
+    Route::get('/starter-kit', fn() => view('admin.sidebar.starter-kit'))->name('sidebar.starter-kit');
+    Route::get('/error-404', fn() => view('admin.sidebar.error-404'))->name('sidebar.error-404');
+
     // User Profile
     Route::get('/profile', [UserController::class, 'index'])->name('user.profile');
     Route::put('/profile/update', [UserController::class, 'update'])->name('user.profile.update');
