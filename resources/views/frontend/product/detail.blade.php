@@ -344,8 +344,25 @@
     </div>
 </div><!--/recommended_items-->
 
-
-
-
-
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function() {
+
+    var childATag = $('#similar-product .carousel-inner .item.active a');
+    var viewProduct = $('.view-product');
+    var imgElement = viewProduct.find('img');
+    var aTag = viewProduct.find('a');
+
+    childATag.click(function (e) {
+        e.preventDefault();
+        var imgSrc = $(this).find('img').attr('src');
+        aTag.attr('href', imgSrc);
+        imgElement.attr('src', imgSrc);
+    });
+
+});
+</script>
+@endpush
+
