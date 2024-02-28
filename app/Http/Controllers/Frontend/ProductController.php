@@ -84,9 +84,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Product $product)
+    public function show(string $id)
     {
-        //
+        $product = Product::find($id);
+        $brand = Brand::find($product->brand_id);
+        $imgList = json_decode($product->image);
+
+        return view('frontend.product.detail', compact('product', 'brand', 'imgList'));
     }
 
     /**

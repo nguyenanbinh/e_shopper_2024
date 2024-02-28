@@ -10,7 +10,7 @@ use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Frontend\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,9 +25,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 // Auth frontend
 Route::get('/login',[AuthController::class, 'getLogin'])->name('login');
 Route::post('/login',[AuthController::class, 'postLogin'])->name('login');
@@ -53,6 +51,8 @@ Route::group(['prefix' => 'account', 'as' => 'account.'] , function () {
     Route::get('/edit-product/{id}/update', [ProductController::class, 'edit'])->name('edit-product');
     Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('update-product');
 });
+// Product details
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('show-product');;
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
