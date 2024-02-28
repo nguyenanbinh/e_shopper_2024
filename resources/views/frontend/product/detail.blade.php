@@ -14,7 +14,7 @@
                 <div class="carousel-inner">
                     <div class="item active">
                       <a href="#"><img src="{{ $product->image_src }}" width="80" alt=""></a>
-                      <a href="#"><img src="{{ asset('/frontend/images/product-details/1.jpg') }}" width="80" height="80" alt=""></a>
+                      <a href="#"><img src="{{ $product->image_src }}" width="80" alt=""></a>
                       <a href="#"><img src="{{ $product->image_src }}" width="80" alt=""></a>
                     </div>
                     {{-- <div class="item">
@@ -344,10 +344,6 @@
     </div>
 </div><!--/recommended_items-->
 
-
-
-
-
 @endsection
 
 @push('scripts')
@@ -369,3 +365,4 @@
 });
 </script>
 @endpush
+
