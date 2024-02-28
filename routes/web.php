@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
+use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -33,9 +34,7 @@ Route::post('/login',[AuthController::class, 'postLogin'])->name('login');
 Route::get('/register',[AuthController::class, 'getRegister'])->name('register');
 Route::post('/register',[AuthController::class, 'postRegister'])->name('register');
 Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
-// Profile
-Route::get('/profile',[FrontendUserController::class, 'profile'])->name('profile');
-Route::put('/profile',[FrontendUserController::class, 'updateProfile'])->name('profile');
+
 // Blog
 Route::get('/blogs',[FrontendBlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}',[FrontendBlogController::class, 'show'])->name('blogs.show');
@@ -43,7 +42,19 @@ Route::post('/ajaxBlog',[FrontendBlogController::class, 'ajaxBlog'])->middleware
 // Blog comment
 Route::post('/ajaxComment', [FrontendBlogController::class, 'ajaxComment'])->middleware('auth')->name('blogs.ajaxComment');
 Route::post('/ajaxCommentChild', [FrontendBlogController::class, 'ajaxCommentChild'])->middleware('auth')->name('blogs.ajaxCommentChild');
+// Account
+Route::group(['prefix' => 'account', 'as' => 'account.'] , function () {
+    // Profile
+    Route::get('/profile', [FrontendUserController::class, 'profile'])->name('profile');
+    Route::put('/update', [FrontendUserController::class, 'updateProfile'])->name('update');
+    Route::get('/my-product', [ProductController::class, 'index'])->name('my-product');
+    Route::get('/add-product', [ProductController::class, 'create'])->name('add-product');
+    Route::post('/add-product', [ProductController::class, 'store'])->name('add-product');
+    Route::get('/edit-product/{id}/update', [ProductController::class, 'edit'])->name('edit-product');
+    Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('update-product');
+});
 
+// Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();
     // Dashboard
