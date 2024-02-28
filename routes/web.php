@@ -36,7 +36,7 @@ Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 // Blog
 Route::get('/blogs',[FrontendBlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{id}',[FrontendBlogController::class, 'show'])->name('blogs.show');
-Route::post('/ajaxBlog',[FrontendBlogController::class, 'ajaxBlog'])->middleware('auth')->name('blogs.ajaxBlog');
+Route::post('/ajaxRate',[FrontendBlogController::class, 'ajaxRate'])->middleware('auth')->name('blogs.ajaxRate');
 // Blog comment
 Route::post('/ajaxComment', [FrontendBlogController::class, 'ajaxComment'])->middleware('auth')->name('blogs.ajaxComment');
 Route::post('/ajaxCommentChild', [FrontendBlogController::class, 'ajaxCommentChild'])->middleware('auth')->name('blogs.ajaxCommentChild');

@@ -14,6 +14,7 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::orderBy('created_at', 'desc')->paginate(3);
+
         return view('frontend.blog.index', compact('blogs'));
     }
 
@@ -28,13 +29,17 @@ class BlogController extends Controller
                 ->get()
                 ->avg('rate')
         );
-        $comments = Comment::all();
 
-        return view('frontend.blog.detail', compact('blog', 'pre', 'next', 'avgRate', 'comments')
+        $totalRate = count(Rate::where('blog_id', $blog->id)
+        ->orderBy('created_at', 'desc')
+        ->get());
+        return view(
+            'frontend.blog.detail',
+            compact('blog', 'pre', 'next', 'avgRate', 'totalRate')
         );
     }
 
-    public function ajaxBlog(Request $request)
+    public function ajaxRate(Request $request)
     {
         $data = $request->except('_token');
 

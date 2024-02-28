@@ -14,11 +14,17 @@
                 <li><i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($blog->created_at)->format('M d, Y') }}</li>
             </ul>
             <span>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-half-o"></i>
+                @for ($i=1;$i<=5;$i++)
+                    @if($avgRate)
+                        @if($i <= $avgRate)
+                            <i class="fa fa-star"></i>
+                        @else
+                            <i class="fa fa-star-o"></i>
+                        @endif
+                    @else
+                        <i class="fa fa-star-o"></i>
+                    @endif
+                @endfor
             </span>
         </div>
         <a href="">
@@ -57,7 +63,7 @@
                 <span class="rate-np">{{ $avgRate }}</span>
             </div>
         </div>
-        <div class="color">(6 votes)</div>
+        <div class="color">({{ $totalRate }} votes)</div>
     </div>
     {{-- <ul class="tag">
         <li>TAG:</li>
@@ -181,7 +187,9 @@
         );
 
         $('.ratings_stars').click(function(){
+            var isLogin = '{{ auth()->check() }}';
             var Values =  $(this).find("input").val();
+            if(isLogin) {
             $('.rate-np').text(Values);
             if ($(this).hasClass('ratings_over')) {
                 $('.ratings_stars').removeClass('ratings_over');
@@ -190,24 +198,29 @@
                 $(this).prevAll().andSelf().addClass('ratings_over');
             }
 
-            $.ajax({
-                type:'POST',
-                url: '{{ route('blogs.ajaxBlog') }}',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    rate: Values,
-                    blog_id: '{{ $blog->id }}',
-                    user_id: '{{ auth()->user()->id ?? '' }}',
-                },
-                success:function(data){
-                    console.log(data);
-                },
-                error: function(errors) {
-                    if(errors.status == 401) {
-                        alert('Please login to rate this blog')
+                $.ajax({
+                    type:'POST',
+                    url: '{{ route('blogs.ajaxRate') }}',
+                    data: {
+                        // _token: '{{ csrf_token() }}',
+                        rate: Values,
+                        blog_id: '{{ $blog->id }}',
+                        user_id: '{{ auth()->user()->id ?? 0 }}',
+                    },
+                    success:function(data){
+                        alert('Rate success');
+                        console.log(data);
+                    },
+                    error: function(errors) {
+                        if(errors.status == 401) {
+                            alert('Please login to rate this blog')
+                        }
                     }
-                }
-            });
+                });
+            } else {
+                alert('Please login to rate this blog');
+            }
+
         });
 
         // Reply comment

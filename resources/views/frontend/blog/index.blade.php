@@ -3,7 +3,14 @@
 <div class="blog-post-area">
     <h2 class="title text-center">Latest From our Blog</h2>
     @foreach ($blogs as $blog)
-
+    @php
+            $avgRate = round(
+                \App\Models\Rate::where('blog_id', $blog->id)
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->avg('rate')
+        );
+    @endphp
     <div class="single-blog-post">
         <h3>{{ $blog->title }}</h3>
         <div class="post-meta">
@@ -13,11 +20,17 @@
                 <li><i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($blog->created_at)->format('M d, Y') }}</li>
             </ul>
             <span>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-half-o"></i>
+                @for ($i=1;$i<=5;$i++)
+                    @if($avgRate)
+                        @if($i <= $avgRate)
+                            <i class="fa fa-star"></i>
+                        @else
+                            <i class="fa fa-star-o"></i>
+                        @endif
+                    @else
+                        <i class="fa fa-star-o"></i>
+                    @endif
+                @endfor
             </span>
         </div>
         <a href="{{ route('blogs.show', ['id' => $blog->id]) }}">
