@@ -35,8 +35,10 @@
         </div>
         <div class="pager-area">
             <ul class="pager pull-right">
-                <li><a href="{{ $pre }}"  @empty($pre) class="btn disabled" @endempty>Pre</a></li>
-                <li><a href="{{ $next }}" @empty($next) class="btn disabled" @endempty>Next</a></li>
+                <li><a href="{{ route('blogs.show', ['id' => $pre ?? $blog->id]) }}" @empty($pre) class="btn disabled"
+                        @endempty>Pre</a></li>
+                <li><a href="{{ route('blogs.show', ['id' => $next ?? $blog->id]) }}" @empty($next) class="btn disabled"
+                        @endempty>Next</a></li>
             </ul>
         </div>
     </div>
@@ -48,11 +50,16 @@
         <div class="rate-this">Rate this item:</div>
         <div class="rate">
             <div class="vote">
-                <div class="star_1 ratings_stars @if($avgRate >= 1) ratings_over @endif"><input value="1" type="hidden"></div>
-                <div class="star_2 ratings_stars @if($avgRate >= 2) ratings_over @endif"><input value="2" type="hidden"></div>
-                <div class="star_3 ratings_stars @if($avgRate >= 3) ratings_over @endif"><input value="3" type="hidden"></div>
-                <div class="star_4 ratings_stars @if($avgRate >= 4) ratings_over @endif"><input value="4" type="hidden"></div>
-                <div class="star_5 ratings_stars @if($avgRate >= 5) ratings_over @endif"><input value="5" type="hidden"></div>
+                <div class="star_1 ratings_stars @if($avgRate >= 1) ratings_over @endif"><input value="1" type="hidden">
+                </div>
+                <div class="star_2 ratings_stars @if($avgRate >= 2) ratings_over @endif"><input value="2" type="hidden">
+                </div>
+                <div class="star_3 ratings_stars @if($avgRate >= 3) ratings_over @endif"><input value="3" type="hidden">
+                </div>
+                <div class="star_4 ratings_stars @if($avgRate >= 4) ratings_over @endif"><input value="4" type="hidden">
+                </div>
+                <div class="star_5 ratings_stars @if($avgRate >= 5) ratings_over @endif"><input value="5" type="hidden">
+                </div>
                 <span class="rate-np">{{ $avgRate }}</span>
             </div>
         </div>
@@ -72,159 +79,67 @@
 </div>
 <!--/socials-share-->
 
-{{-- <div class="media commnets">
-    <a class="pull-left" href="#">
-        <img class="media-object" src="{{ asset('frontend/images/blog/socials.png') }}" alt="">
-    </a>
-    <div class="media-body">
-        <h4 class="media-heading">Annie Davis</h4>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo consequat.</p>
-        <div class="blog-socials">
-            <ul>
-                <li><a href=""><i class="fa fa-facebook"></i></a></li>
-                <li><a href=""><i class="fa fa-twitter"></i></a></li>
-                <li><a href=""><i class="fa fa-dribbble"></i></a></li>
-                <li><a href=""><i class="fa fa-google-plus"></i></a></li>
-            </ul>
-            <a class="btn btn-primary" href="">Other Posts</a>
-        </div>
-    </div>
-</div> --}}
 <!--Comments-->
 <div class="response-area">
-    <h2>3 RESPONSES</h2>
+    <h2>{{ count($comments) ?? 3 }} RESPONSES</h2>
     <ul class="media-list">
-        <li class="media">
+        @if(isset($comments) && count($comments))
+            @foreach ($comments as $comment)
+                @php
+                    $childrenComments = $comment->children()->get();
+                    $hour = \Carbon\Carbon::parse($comment->created_at)->format('h:i a');
+                    $date = \Carbon\Carbon::parse($comment->created_at)->format('M d, Y');
+                @endphp
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="{{ $comment->avatar_src }}" width="200" height="100" alt="">
+                    </a>
+                    <div class="media-body">
+                        <ul class="sinlge-post-meta">
+                            <li><i class="fa fa-user"></i>{{ $comment->user_name }}</li>
+                            <li><i class="fa fa-clock-o"></i> {{ \Carbon\Carbon::parse($comment->created_at)->format('h:i a') }}</li>
+                            <li><i class="fa fa-calendar"></i> {{ \Carbon\Carbon::parse($comment->created_at)->format('M d, Y') }}</li>
+                        </ul>
+                        <p>{{ $comment->content }}</p>
+                        <button class="btn btn-primary reply-blog" data-comment-id="{{ $comment->id }}"><i
+                                class="fa fa-reply"></i>Replay</button>
+                        <div class="replay-box1 hidden">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h2>Leave a replay</h2>
 
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-two.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media second-media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-three.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media second-media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-three.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media second-media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-three.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-four.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media second-media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-three.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media second-media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-three.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
-        <li class="media second-media">
-            <a class="pull-left" href="#">
-                <img class="media-object" src="images/blog/man-three.jpg" alt="">
-            </a>
-            <div class="media-body">
-                <ul class="sinlge-post-meta">
-                    <li><i class="fa fa-user"></i>Janis Gallagher</li>
-                    <li><i class="fa fa-clock-o"></i> 1:33 pm</li>
-                    <li><i class="fa fa-calendar"></i> DEC 5, 2013</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                    et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat.</p>
-                <a class="btn btn-primary" href=""><i class="fa fa-reply"></i>Replay</a>
-            </div>
-        </li>
+                                    <form id="postCommentChild">
+                                        <div class="text-area">
+                                            <div class="blank-arrow1">
+                                                <label>Your Name</label>
+                                            </div>
+                                            <span>*</span>
+                                            <textarea name="message" rows="5"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">post comment</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                @foreach ($childrenComments as $child)
+                <li class="media second-media">
+                    <a class="pull-left" href="#">
+                        <img class="media-object" src="{{ $child->avatar_src }}" width="200" height="100" alt="">
+                    </a>
+                    <div class="media-body">
+                        <ul class="sinlge-post-meta">
+                            <li><i class="fa fa-user"></i>{{ $child->user_name }}</li>
+                            <li><i class="fa fa-clock-o"></i>{{ $hour }}</li>
+                            <li><i class="fa fa-calendar"></i>{{ $date }}</li>
+                        </ul>
+                        <p>{{ $child->content }}</p>
+                    </div>
+                </li>
+                @endforeach
+            @endforeach
+        @endif
     </ul>
 </div>
 <!--/Response-area-->
@@ -232,15 +147,16 @@
     <div class="row">
         <div class="col-sm-12">
             <h2>Leave a replay</h2>
-
-            <div class="text-area">
-                <div class="blank-arrow">
-                    <label>Your Name</label>
+            <form id="postCommentParent">
+                <div class="text-area">
+                    <div class="blank-arrow1">
+                        <label>Your Name</label>
+                    </div>
+                    <span>*</span>
+                    <textarea name="message" rows="5"></textarea>
                 </div>
-                <span>*</span>
-                <textarea name="message" rows="11"></textarea>
-                <a class="btn btn-primary" href="">post comment</a>
-            </div>
+                <button type="submit" class="btn btn-primary">post comment</button>
+            </form>
         </div>
     </div>
 </div>
@@ -254,7 +170,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    </script>
+</script>
 <script>
     $(document).ready(function(){
         //vote
@@ -306,6 +222,71 @@
             }
 
         });
+
+        // Reply comment
+        $('form#postCommentParent').submit(function(e){
+            e.preventDefault();
+            var content = $(this).find('textarea').val();
+            var commentList = $('.media-list');
+            $.ajax({
+                type:'POST',
+                url: '{{ route('blogs.ajaxComment') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    content: content,
+                    blog_id: '{{ $blog->id }}',
+                    user_id: '{{ auth()->user()->id ?? '' }}',
+                },
+                success:function(data){
+                    commentList.append(data.html);
+                    console.log(data);
+                },
+                error: function(errors) {
+                    if(errors.status == 401) {
+                        alert('Please login to comment');
+                    }
+                }
+            });
+        });
+
+        // Reply child
+        $('.reply-blog').click(function (e) {
+            e.preventDefault();
+            $(this).parent().find('.replay-box1').toggleClass('hidden');
+        });
+
+        $('form#postCommentChild').submit(function(e){
+            e.preventDefault();
+            var contentEle = $(this).find('textarea');
+            var content = contentEle.val();
+            // Get the closest parent 'li' element of the form
+            var parentLi = $(this).closest('li.media');
+            var mediaList = $(this).closest('ul.media-list');
+            var commentId = parentLi.find('.reply-blog').data('comment-id');
+
+            $.ajax({
+                type:'POST',
+                url: '{{ route('blogs.ajaxCommentChild') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    content: content,
+                    comment_id: commentId,
+                    blog_id: '{{ $blog->id }}',
+                    user_id: '{{ auth()->user()->id ?? '' }}',
+                },
+                success:function(data){
+                    mediaList.append(data.html);
+                    contentEle.val('');
+                    console.log(data);
+                },
+                error: function(errors) {
+                    if(errors.status == 401) {
+                        alert('Please login to comment');
+                    }
+                }
+            });
+        });
+
     });
 </script>
 @endpush

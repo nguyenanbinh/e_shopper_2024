@@ -2304,13 +2304,56 @@ textarea {
     width: 100%;
 }
 
-.replay-box form input:hover,
+.replay-box1 form input:hover,
+.text-area textarea:hover {
+    border: 1px solid #FE980F;
+}
+
+.replay-box1 {
+    margin-bottom: 7px;
+    margin-top: 5px;
+}
+
+.replay-box1 h2 {
+    font-weight: 700;
+    font-size: 20px;
+    color: #363432;
+    margin-top: 10px;
+    margin-bottom: 5px
+}
+
+.replay-box1 label {
+    background: #FE980F;
+    color: #FFFFFF;
+    margin-bottom: 15px;
+    padding: 3px 15px;
+    float: left;
+    font-weight: 400;
+}
+
+.replay-box1 span {
+    color: #FE980F;
+    float: right;
+    font-weight: 700;
+    margin-top: 21px;
+}
+
+.replay-box1 form input {
+    border: 1px solid #F7F7F0;
+    color: #ADB2B2;
+    font-size: 12px;
+    margin-bottom: 22px;
+    padding: 8px;
+    width: 100%;
+}
+
+.replay-box1 form input:hover,
 .text-area textarea:hover {
     border: 1px solid #FE980F;
 }
 
 .text-area {
-    margin-top: 66px
+    margin-top: 6px
 }
 
 .text-area textarea {
@@ -2466,4 +2509,9 @@ textarea {
 
 .is-invalid {
     border: 2px solid red !important;
+}
+
+.product-table thead tr {
+    background-color: #FE980F;
+    color: #fff;
 }

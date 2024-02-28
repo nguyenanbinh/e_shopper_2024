@@ -72,7 +72,7 @@
                             </li> --}}
                             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"></i> Account</a>
                                 <ul class="dropdown-menu">
-                                  <li><a href="{{ route('profile') }}">Profile</a></li>
+                                  <li><a href="{{ route('account.profile') }}">Profile</a></li>
                                   <li><a href="{{ route('logout') }}" onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">Logout</a></li>
                                 </ul>
