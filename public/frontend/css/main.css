@@ -2510,3 +2510,8 @@ textarea {
 .is-invalid {
     border: 2px solid red !important;
 }
+
+.product-table thead tr {
+    background-color: #FE980F;
+    color: #fff;
+}
