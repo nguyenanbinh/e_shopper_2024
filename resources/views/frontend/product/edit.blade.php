@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('content')
 <div class="blog-post-area">
-    <h2 class="title text-center">Add product</h2>
+    <h2 class="title text-center">Update product</h2>
     <div id="form" class="signup-form">
         <!--profile-form-->
         <form action="{{ route('account.update-product', ['id' => $product->id]) }}" method="POST" enctype="multipart/form-data">
@@ -122,7 +122,7 @@
                 <div class="col-md-3">
                     <div class="custom-control custom-checkbox image-checkbox">
                         <label class="custom-control-label" for="ck1a">
-                            <img src="{{ asset('upload/product/' . $image) }}" alt="#" class="img-fluid" width="120" height="120">
+                            <img src="{{ asset('upload/product/'. auth()->id(). '/' . $image) }}" alt="#" class="img-fluid" width="120" height="120">
                         </label>
                         <input type="checkbox" name="imgCkb[]" value="{{ $key }}" class="custom-control-input" id="ck1a">
                     </div>
@@ -140,7 +140,7 @@
                 </span>
                 @enderror
             </div>
-            <button type="submit" class="btn btn-default">Create</button>
+            <button type="submit" class="btn btn-default">Update</button>
         </form>
     </div>
 </div>
