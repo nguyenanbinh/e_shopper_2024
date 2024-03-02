@@ -4,7 +4,7 @@
 <div class="product-details"><!--product-details-->
     <div class="col-sm-5">
         <div class="view-product">
-            <img src="{{ $product->image_src }}" alt="" />
+            <img src="{{ $product->image_src  }}" alt="" />
             <a href="{{ $product->image_src }}" rel="prettyPhoto"><h3>ZOOM</h3></a>
 
         </div>
@@ -13,20 +13,10 @@
               <!-- Wrapper for slides -->
                 <div class="carousel-inner">
                     <div class="item active">
-                      <a href="#"><img src="{{ $product->image_src }}" width="80" alt=""></a>
-                      <a href="#"><img src="{{ $product->image_src }}" width="80" alt=""></a>
-                      <a href="#"><img src="{{ $product->image_src }}" width="80" alt=""></a>
+                        @foreach ($imgList as $key => $image)
+                            <a href="#"><img src="{{ asset('upload/product/'. auth()->id() . '/image_84x85_'. $image) }}"  alt="{{ $key }}"></a>
+                        @endforeach
                     </div>
-                    {{-- <div class="item">
-                      <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                      <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                      <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div>
-                    <div class="item">
-                      <a href=""><img src="images/product-details/similar1.jpg" alt=""></a>
-                      <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
-                      <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
-                    </div> --}}
 
                 </div>
 
@@ -358,8 +348,12 @@
     childATag.click(function (e) {
         e.preventDefault();
         var imgSrc = $(this).find('img').attr('src');
-        aTag.attr('href', imgSrc);
-        imgElement.attr('src', imgSrc);
+        var id = {{ auth()->id() }}
+        var mediumSrc = imgSrc.replace("image_84x85_", "image_329x390_");
+        var largeSrc = imgSrc.replace("image_84x85_", "");
+
+        aTag.attr('href', largeSrc);
+        imgElement.attr('src', mediumSrc);
     });
 
 });
