@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Frontend\AuthController;
 use App\Http\Controllers\Frontend\BlogController as FrontendBlogController;
+use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -52,7 +53,14 @@ Route::group(['prefix' => 'account', 'as' => 'account.'] , function () {
     Route::put('/edit-product/{id}', [ProductController::class, 'update'])->name('update-product');
 });
 // Product details
-Route::get('/product/{id}', [ProductController::class, 'show'])->name('show-product');;
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('show-product');
+// Cart
+Route::post('add-to-cart', [CartController::class, 'ajaxCart'])->name('add-to-cart');
+Route::post('up-qty', [CartController::class, 'upQty'])->name('up-qty');
+Route::post('down-qty', [CartController::class, 'downQty'])->name('down-qty');
+Route::post('change-qty', [CartController::class, 'changeQty'])->name('change-qty');
+Route::get('show-cart', [CartController::class, 'showCart'])->name('show-cart');
+Route::delete('delete-cart', [CartController::class, 'deleteCart'])->name('delete-cart');
 
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {

@@ -39,8 +39,8 @@
             <span>
                 <span>US ${{ $product->price }}</span>
                 <label>Quantity:</label>
-                <input type="text" name="qty" value="3" />
-                <button type="button" class="btn btn-fefault cart">
+                <input type="number" name="qty" value="1" min="1"/>
+                <button type="button" class="btn btn-default cart">
                     <i class="fa fa-shopping-cart"></i>
                     Add to cart
                 </button>
@@ -337,6 +337,13 @@
 @endsection
 
 @push('scripts')
+<script type="text/javascript">
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 <script>
     $(document).ready(function() {
 
@@ -356,6 +363,38 @@
         imgElement.attr('src', mediumSrc);
     });
 
+    $('.cart').click(function (e) {
+        e.preventDefault();
+        qtyEle = $('input[name="qty"]');
+        var qty = qtyEle.val();
+        var productId = '{{ $product->id }}';
+        if(qty > 0) {
+            $.ajax({
+                type: "POST",
+                url: "{{ route('change-qty') }}",
+                data: {
+                    productId,
+                    qty
+                },
+                success: function (response) {
+                    var cartLength = Object.keys(response.cart).length;
+                    cartCount(cartLength);
+                    alert('add to cart success');
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+    });
+
+    function cartCount (num) {
+            var cartListItem = $('.nav.navbar-nav li:has(a[href="{{ route('show-cart') }}"])');
+
+            // Update the text inside the <a> tag
+            cartListItem.find('a').html(`<i class="fa fa-shopping-cart"></i> Cart(${num})`);
+    }
 });
 </script>
 @endpush

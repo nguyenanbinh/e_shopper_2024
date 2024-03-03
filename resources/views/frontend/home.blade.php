@@ -12,13 +12,13 @@
                         <img src="{{ $product->image_src }}" alt="" />
                         <h2>${{ $product->price }}</h2>
                         <p>{{ $product->name }}</p>
-                        <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        <a href="#" data-product-id="{{ $product->id}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                     </div>
                     <div class="product-overlay">
                         <div class="overlay-content">
                             <h2>${{ $product->price }}</h2>
                             <p><a href="{{ route('show-product', ['id' => $product->id]) }}">{{ $product->name }}</a></p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            <a href="#" data-product-id="{{ $product->id }}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                         </div>
                     </div>
 					<img src="@if ($product->status == 0)
@@ -426,3 +426,41 @@
     </div>
 </div><!--/recommended_items-->
 @endsection
+
+@push('scripts')
+<script>
+    $(document).ready(function () {
+        $('a.add-to-cart').click(function (e) {
+            e.preventDefault();
+            var productId = $(this).data('product-id');
+            console.log(productId);
+            $.ajax({
+                type: "POST",
+                url: "{{ route('add-to-cart') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    product_id: productId,
+                },
+                success: function (response) {
+                    var cartLength = Object.keys(response.cart).length;
+                    cartCount(cartLength);
+                    alert('add to cart successfully');
+                },
+                error: function (errors) {
+                    console.log(errors);
+                }
+            });
+        });
+
+        function cartCount (num) {
+            var cartListItem = $('.nav.navbar-nav li:has(a[href="{{ route('show-cart') }}"])');
+
+            // Update the text inside the <a> tag
+            cartListItem.find('a').html(`<i class="fa fa-shopping-cart"></i> Cart(${num})`);
+        }
+    });
+
+
+</script>
+
+@endpush
