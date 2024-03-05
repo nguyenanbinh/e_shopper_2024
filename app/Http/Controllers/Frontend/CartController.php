@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\OrderMail;
 use App\Models\Product;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class CartController extends Controller
 {
@@ -113,6 +117,40 @@ class CartController extends Controller
 
         return response()->json(['grandTotal' => $grandTotal, 'cart' => $cart]);
     }
+
+    public function checkout() {
+        $cart = session()->get('cart', []);
+        $grandTotal = $this->calcGrandTotal($cart);
+        if(empty($cart)) {
+            return redirect()->route('show-cart');
+        }
+        return view('frontend.cart.checkout', compact('cart', 'grandTotal'));
+    }
+
+    public function postCheckout(Request $request) {
+        $cart = session()->get('cart', []);
+        $grandTotal = $this->calcGrandTotal($cart);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'address' => $request->address,
+            'phone' => $request->phone,
+            'cart' => $cart,
+            'grandTotal' => $grandTotal
+        ];
+
+        try {
+
+            Mail::to('binhna98@gmail.com')->send(new OrderMail($data));
+
+            return redirect()->back()->with('success', "Email sent successfully!");
+        } catch (Exception $ex) {
+            Log::error($ex->getMessage());
+            return redirect()->back()->withErrors("Email sent failed!");
+        }
+    }
+
     protected function calcGrandTotal($cart)
     {
         $grandTotal = 0;

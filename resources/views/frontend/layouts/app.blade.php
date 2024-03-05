@@ -40,7 +40,7 @@
 		<div class="container">
 			<div class="row">
                 <!--menu-left-->
-                @if(!Route::is('login', 'register', 'show-cart'))
+                @if(!Route::is('login', 'register', 'show-cart', 'checkout'))
                 @include('frontend.layouts.menu-left')
                 @endif
                 <!--/menu-left-->

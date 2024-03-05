@@ -121,6 +121,7 @@
                             </li>
                             <li><a href="404.html">404</a></li>
                             <li><a href="contact-us.html">Contact</a></li>
+                            <li><a href="{{ route('advanced-search') }}">Advanced Search</a></li>
                         </ul>
                     </div>
                 </div>
