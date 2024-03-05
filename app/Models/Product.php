@@ -23,7 +23,7 @@ class Product extends Model
 
     public function getImageSrcAttribute()
     {
-        $user_id = auth()->id();
+        $user_id = $this->user_id;
         return $this->image ? asset(("upload/product/$user_id/") . json_decode($this->image)[0]) : '';
     }
 }

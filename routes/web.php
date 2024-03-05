@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\ProductController;
 use App\Http\Controllers\Frontend\UserController as FrontendUserController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\SearchController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -61,7 +62,13 @@ Route::post('down-qty', [CartController::class, 'downQty'])->name('down-qty');
 Route::post('change-qty', [CartController::class, 'changeQty'])->name('change-qty');
 Route::get('show-cart', [CartController::class, 'showCart'])->name('show-cart');
 Route::delete('delete-cart', [CartController::class, 'deleteCart'])->name('delete-cart');
-
+// Search
+Route::get('advanced-search', [SearchController::class, 'index'])->name('advanced-search');
+Route::get('search-range', [HomeController::class, 'ajaxProduct'])->name('search-range');
+Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+Route::post('checkout', [CartController::class, 'postCheckout'])->name('checkout');
+// Send mail
+Route::get('send', [HomeController::class, 'sendMail']);
 // Admin
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();
