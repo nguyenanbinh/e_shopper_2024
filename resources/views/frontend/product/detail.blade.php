@@ -14,7 +14,7 @@
                 <div class="carousel-inner">
                     <div class="item active">
                         @foreach ($imgList as $key => $image)
-                            <a href="#"><img src="{{ asset('upload/product/'. auth()->id() . '/image_84x85_'. $image) }}"  alt="{{ $key }}"></a>
+                            <a href="#"><img src="{{ asset('upload/product/'. $product->user_id . '/image_84x85_'. $image) }}"  alt="{{ $key }}"></a>
                         @endforeach
                     </div>
 

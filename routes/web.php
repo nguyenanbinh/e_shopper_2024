@@ -70,9 +70,12 @@ Route::post('checkout', [CartController::class, 'postCheckout'])->name('checkout
 // Send mail
 Route::get('send', [HomeController::class, 'sendMail']);
 // Admin
+
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Auth::routes();
     // Dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Left sidebar
     Route::get('/form-basic', fn() => view('admin.sidebar.form-basic'))->name('sidebar.form-basic');
