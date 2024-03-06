@@ -9,12 +9,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/images/favicon.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin-be/assets/images/favicon.png') }}">
     <title>Nice admin Template - The Ultimate Multipurpose admin template</title>
     <!-- Custom CSS -->
-    <link href="{{ asset('admin/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin-be/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <!-- Custom CSS -->
-    <link href="{{ asset('admin/dist/css/style.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('admin-be/dist/css/style.min.css') }}" rel="stylesheet">
     <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
     @include('ckfinder::setup')
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -76,24 +76,24 @@
     <!-- ============================================================== -->
     <!-- All Jquery -->
     <!-- ============================================================== -->
-    <script src="{{asset('admin/assets/libs/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{asset('admin-be/assets/libs/jquery/dist/jquery.min.js')}}"></script>
 
     <!-- Bootstrap tether Core JavaScript -->
-    <script src="{{asset('admin/assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{asset('admin-be/assets/libs/popper.js/dist/umd/popper.min.js')}}"></script>
+    <script src="{{asset('admin-be/assets/libs/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <!-- slimscrollbar scrollbar JavaScript -->
-    <script src="{{asset('admin/assets/extra-libs/sparkline/sparkline.js')}}"></script>
+    <script src="{{asset('admin-be/assets/extra-libs/sparkline/sparkline.js')}}"></script>
     <!--Wave Effects -->
-    <script src="{{asset('admin/dist/js/waves.js')}}"></script>
+    <script src="{{asset('admin-be/dist/js/waves.js')}}"></script>
     <!--Menu sidebar -->
-    <script src="{{asset('admin/dist/js/sidebarmenu.js')}}"></script>
+    <script src="{{asset('admin-be/dist/js/sidebarmenu.js')}}"></script>
     <!--Custom JavaScript -->
-    <script src="{{asset('admin/dist/js/custom.min.js')}}"></script>
+    <script src="{{asset('admin-be/dist/js/custom.min.js')}}"></script>
     <!--This page JavaScript -->
     <!--chartis chart-->
-    <script src="{{asset('admin/assets/libs/chartist/dist/chartist.min.js')}}"></script>
-    <script src="{{asset('admin/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}"></script>
-    <script src="{{asset('admin/dist/js/pages/dashboards/dashboard1.js')}}"></script>
+    <script src="{{asset('admin-be/assets/libs/chartist/dist/chartist.min.js')}}"></script>
+    <script src="{{asset('admin-be/assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js')}}"></script>
+    <script src="{{asset('admin-be/dist/js/pages/dashboards/dashboard1.js')}}"></script>
     @stack('scripts')
 </body>
 
